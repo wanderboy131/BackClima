@@ -53,18 +53,16 @@ public class LluviaService {
 
              return "Probabilidad de lluvia según pesos intuitivos y generales: "
                      + score + "% "
-                     + "Codigo de tiempo" + " "
+                     + "Codigo de tiempo:"
                      + codigoTiempo + " "
-                     + "humedad: " + " "
+                     + "humedad: "
                      + humedadRelativa + "%"
-                     + "presion: " + " "
+                     + "presion: "
                      + presionSuperficial + "hPa "
                      + "nubosidad: " + " "
                      + nubosidadTotal + "% "
                      + "Temperatura: "
-                     + temperatura + "C°"
-                     + "Precipitacion según Open Meteo: "
-                     + precipitacionSistema + "%" ;
+                     + temperatura + "C°";
 
         }
 
