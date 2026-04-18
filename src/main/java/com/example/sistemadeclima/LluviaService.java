@@ -12,7 +12,7 @@ public class LluviaService {
             int humedadRelativa = clima.getCurrent().getRelative_humidity_2m();
             int nubosidadTotal = clima.getCurrent().getCloud_cover();
             int codigoTiempo = clima.getCurrent().getWeather_code();
-
+            double precipitacionSistema = clima.getCurrent().getPrecipitation();
             double puntoRocio = temperatura - ((100 - humedadRelativa) / 5.0);
             double diferenciaTemperatura = temperatura - puntoRocio;
             double deficitPresion = 1013 - presionSuperficial;
@@ -52,16 +52,19 @@ public class LluviaService {
             score = Math.min(score, 100);
 
              return "Probabilidad de lluvia según pesos intuitivos y generales: "
-                     + score + " "
+                     + score + "% "
                      + "Codigo de tiempo" + " "
                      + codigoTiempo + " "
                      + "humedad: " + " "
-                     + humedadRelativa + " "
+                     + humedadRelativa + "%"
                      + "presion: " + " "
-                     + presionSuperficial + " "
+                     + presionSuperficial + "hPa "
                      + "nubosidad: " + " "
-                     + nubosidadTotal + " "
-                     + "Temperatura: " + temperatura;
+                     + nubosidadTotal + "% "
+                     + "Temperatura: "
+                     + temperatura + "C°"
+                     + "Precipitacion según Open Meteo: "
+                     + precipitacionSistema + "%" ;
 
         }
 
