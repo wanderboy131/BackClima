@@ -2,68 +2,68 @@ package com.example.sistemadeclima;
 
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+
 @Service
 public class LluviaService {
 
-        public String estimarLluvia(ClimaResponse clima) {
+     public double estimarLluvia(ClimaResponse clima){
 
-            double temperatura = clima.getCurrent().getTemperature_2m();
-            double presionSuperficial = clima.getCurrent().getSurface_pressure();
-            int humedadRelativa = clima.getCurrent().getRelative_humidity_2m();
-            int nubosidadTotal = clima.getCurrent().getCloud_cover();
-            int codigoTiempo = clima.getCurrent().getWeather_code();
-            double precipitacionSistema = clima.getCurrent().getPrecipitation();
-            double puntoRocio = temperatura - ((100 - humedadRelativa) / 5.0);
-            double diferenciaTemperatura = temperatura - puntoRocio;
-            double deficitPresion = 1013 - presionSuperficial;
+         //Datos main
+         double tempActual = clima.getMain().getTemp();
+         int humidityActual = clima.getMain().getHumidity();
+         double grnd_levelActual = clima.getMain().getGrnd_level();
+
+         //Datos Clouds
+         int cloudsActual = clima.getClouds().getAll();
+
+         //Datos Wind
+         double vientoActual = clima.getWind().getSpeed();
+         double vientoDeg = clima.getWind().getDeg();
+
+         boolean vientoLluvioso = (vientoDeg >= 180 && vientoDeg <= 270);
+         double dirFactor = vientoLluvioso ? 1.2 : 0.8;
 
 
-            int score = 0;
 
-// base por weathercode
-            if (codigoTiempo <= 3)
-                score += 0;
-            else if (codigoTiempo <= 57)
-                score += 30;
-            else if (codigoTiempo <= 82)
-                score += 70;
-            else if (codigoTiempo >= 95)
-                score += 90;
+         //Fórmula Magnus
+         double alpha = ((17.625 * tempActual) / (243.04 + tempActual))
+                 + Math.log(humidityActual / 100.0);
+         double dewpoint = (243.04 * alpha) / (17.625 - alpha);
+         double deltaDew = tempActual - dewpoint;
 
-// ajustes por factores
-            if (humedadRelativa > 90)
-                score += 15;
-            else if (humedadRelativa > 80)
-                score += 8;
 
-            if (diferenciaTemperatura< 3)
-                score += 15;
-            else if (diferenciaTemperatura < 5)
-                score += 8;
+         //Normalización
+         double humedadNormalizada = (humidityActual - 16) /(100.0 - 16.0);
+         double tempNormalizada = Math.max(0, Math.min(1, (31.0 - tempActual) / (31.0 - 15.9)));
+         double presionNormalizada = Math.max(0, Math.min(1, (1000.2 - grnd_levelActual) / (1000.2 - 980.0)));
+         double nubosidadNormalizada = (cloudsActual - 40.0)/(100.0 - 40.0) ;
+         double vientoNormalizada = Math.min(vientoActual / 10.0, 1.0 ) * dirFactor;
 
-            if (deficitPresion > 15)
-                score += 10;
-            else if (deficitPresion > 8)
-                score += 5;
+         //Normalización de punto de rocio con umbrales más reales
+         double deltaDew_normalizada;
+         if (deltaDew < 4.5) {
+             deltaDew_normalizada = 1.0; // saturado, lluvia muy probable
+         } else {
+             deltaDew_normalizada = Math.max(0, Math.min(1, 1 - (deltaDew / 20.0)));
+         }
 
-            if (nubosidadTotal > 80)
-                score += 10;
+         //Ajuste de nubosidad para que tenga sentido con humedad
+         double nubosidadAjustada = nubosidadNormalizada * humedadNormalizada;
 
-            score = Math.min(score, 100);
 
-             return "Probabilidad de lluvia según pesos intuitivos y generales: "
-                     + score + "% "
-                     + "Codigo de tiempo:"
-                     + codigoTiempo + " "
-                     + "humedad: "
-                     + humedadRelativa + "%"
-                     + "presion: "
-                     + presionSuperficial + "hPa "
-                     + "nubosidad: " + " "
-                     + nubosidadTotal + "% "
-                     + "Temperatura: "
-                     + temperatura + "C°";
+         double score = (deltaDew_normalizada  * 0.40)
+                 +      (nubosidadAjustada     * 0.25)
+                 +      (presionNormalizada    * 0.20)
+                 +      (humedadNormalizada    * 0.10)
+                 +      (vientoNormalizada     * 0.05);
 
-        }
+         double probabilidad = Math.round( score * 10000.0)/100.0;
 
+
+         return score;
+
+
+
+     }
 }

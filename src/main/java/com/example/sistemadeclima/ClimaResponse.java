@@ -1,69 +1,104 @@
 package com.example.sistemadeclima;
 
-import com.sun.tools.javac.Main;
-
 public class ClimaResponse {
+       private Main main;
+       private Clouds clouds;
+       private Wind wind;
 
-    private Current current;
 
-    public Current getCurrent() {
-        return current;
+    public Main getMain() {
+        return main;
     }
 
-    public void setCurrent(Current current) {
-        this.current = current;
+    public void setMain(Main main) {
+        this.main = main;
     }
 
-    public static class Current{
-        private double temperature_2m,  surface_pressure;
-        private int relative_humidity_2m, cloud_cover, weather_code, precipitation;
-
-        public double getTemperature_2m() {
-            return temperature_2m;
-        }
-
-        public void setTemperature_2m(double temperature_2m) {
-            this.temperature_2m = temperature_2m;
-        }
-
-        public int getPrecipitation() {
-            return precipitation;
-        }
-
-        public void setPrecipitation(int precipitation) {
-            this.precipitation = precipitation;
-        }
-
-        public double getSurface_pressure() {
-            return surface_pressure;
-        }
-
-        public void setSurface_pressure(double surface_pressure) {
-            this.surface_pressure = surface_pressure;
-        }
-
-        public int getRelative_humidity_2m() {
-            return relative_humidity_2m;
-        }
-
-        public void setRelative_humidity_2m(int relative_humidity_2m) {
-            this.relative_humidity_2m = relative_humidity_2m;
-        }
-
-        public int getCloud_cover() {
-            return cloud_cover;
-        }
-
-        public void setCloud_over(int cloud_cover) {
-            this.cloud_cover = cloud_cover;
-        }
-
-        public int getWeather_code() {
-            return weather_code;
-        }
-
-        public void setWeather_code(int weather_code) {
-            this.weather_code = weather_code;
-        }
+    public Clouds getClouds() {
+        return clouds;
     }
+
+    public void setClouds(Clouds clouds) {
+        this.clouds = clouds;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public void setWind(Wind wind) {
+        this.wind = wind;
+    }
+
+    public static class Main{
+          private double temp;
+          private int humidity;
+          private double grnd_level;
+
+           public double getTemp() {
+               return temp;
+           }
+
+           public void setTemp(double temp) {
+               this.temp = temp;
+           }
+
+           public int getHumidity() {
+               return humidity;
+           }
+
+           public void setHumidity(int humidity) {
+               this.humidity = humidity;
+           }
+
+           public double getGrnd_level() {
+               return grnd_level;
+           }
+
+           public void setGrnd_level(double grnd_level) {
+               this.grnd_level = grnd_level;
+           }
+       }
+
+       public static class Clouds {
+           private int all;
+
+           public int getAll() {
+               return all;
+           }
+
+           public void setAll(int all) {
+               this.all = all;
+           }
+       }
+
+       public static class Wind {
+           private double speed;
+           private int deg;
+           private double gust;
+
+           public double getSpeed() {
+               return speed;
+           }
+
+           public void setSpeed(double speed) {
+               this.speed = speed;
+           }
+
+           public int getDeg() {
+               return deg;
+           }
+
+           public void setDeg(int deg) {
+               this.deg = deg;
+           }
+
+           public double getGust() {
+               return gust;
+           }
+
+           public void setGust(double gust) {
+               this.gust = gust;
+           }
+       }
 }
