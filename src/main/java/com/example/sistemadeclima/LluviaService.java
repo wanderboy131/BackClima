@@ -65,10 +65,9 @@ public class LluviaService {
          double probabilidad = Math.round( score * 10000.0)/100.0;
 
 
-         return "Prónostico del tiempo: " +
-                 "Probabilidad de lluvia ahora: " + probabilidad +
-                 "Temperatura actual: " + tempActual +
-                 "Huumedad: " + humidityActual;
+         return "Probabilidad de lluvia ahora: " + probabilidad + "%" +
+                 "Temperatura actual: " + tempActual + "°C" +
+                 "Huumedad: " + humidityActual + "%";
 
 
 

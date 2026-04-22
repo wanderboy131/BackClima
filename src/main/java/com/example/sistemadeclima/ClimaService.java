@@ -12,9 +12,9 @@ public class ClimaService {
         this.restTemplate = restTemplate;
     }
 
-    public ClimaResponse getClima(/*double latitud, double longitud*/){
-
-        String url = "https://api.openweathermap.org/data/2.5/weather?lat=10.4631&lon=-73.2532&appid=75f5c1a2f8ef9e1d5a7cff5eb90cc447&units=metric&lang=es";
+    public ClimaResponse getClima(double latitud, double longitud){
+         String apiKey = "75f5c1a2f8ef9e1d5a7cff5eb90cc447";
+        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitud + "&lon=" + longitud + "&appid=" + apiKey + "&units=metric&lang=es";
 
         ClimaResponse response = restTemplate.getForObject(url, ClimaResponse.class);
         return response;
