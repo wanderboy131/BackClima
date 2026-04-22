@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 @Service
 public class LluviaService {
 
-     public double estimarLluvia(ClimaResponse clima){
+     public String estimarLluvia(ClimaResponse clima){
 
          //Datos main
          double tempActual = clima.getMain().getTemp();
@@ -35,7 +35,7 @@ public class LluviaService {
 
          //Normalización
          double humedadNormalizada = (humidityActual - 16) /(100.0 - 16.0);
-         double tempNormalizada = Math.max(0, Math.min(1, (31.0 - tempActual) / (31.0 - 15.9)));
+         //double tempNormalizada = Math.max(0, Math.min(1, (31.0 - tempActual) / (31.0 - 15.9)));
          double presionNormalizada = Math.max(0, Math.min(1, (1000.2 - grnd_levelActual) / (1000.2 - 980.0)));
          double nubosidadNormalizada = (cloudsActual - 40.0)/(100.0 - 40.0) ;
          double vientoNormalizada = Math.min(vientoActual / 10.0, 1.0 ) * dirFactor;
@@ -52,16 +52,23 @@ public class LluviaService {
          double nubosidadAjustada = nubosidadNormalizada * humedadNormalizada;
 
 
+
+
+
+
          double score = (deltaDew_normalizada  * 0.40)
-                 +      (nubosidadAjustada     * 0.25)
-                 +      (presionNormalizada    * 0.20)
-                 +      (humedadNormalizada    * 0.10)
-                 +      (vientoNormalizada     * 0.05);
+                 +      (nubosidadAjustada  * 0.25)
+                 +      (presionNormalizada *0.20)
+                 +      (humedadNormalizada * 0.10)
+                 +      (vientoNormalizada  * 0.05);
 
          double probabilidad = Math.round( score * 10000.0)/100.0;
 
 
-         return score;
+         return "Prónostico del tiempo: " +
+                 "Probabilidad de lluvia ahora: " + probabilidad +
+                 "Temperatura actual: " + tempActual +
+                 "Huumedad: " + humidityActual;
 
 
 
