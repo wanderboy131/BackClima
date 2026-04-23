@@ -4,15 +4,9 @@ public class ClimaResponse {
        private Main main;
        private Clouds clouds;
        private Wind wind;
-       private long dt;
 
-    public long getDt() {
-        return dt;
-    }
 
-    public void setDt(long dt) {
-        this.dt = dt;
-    }
+
 
     public Main getMain() {
         return main;

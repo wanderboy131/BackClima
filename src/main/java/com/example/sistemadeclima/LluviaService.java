@@ -56,13 +56,9 @@ public class LluviaService {
          double probabilidad = Math.round( score * 10000.0)/100.0;
 
 
-         java.time.ZonedDateTime hora = java.time.Instant.ofEpochSecond(clima.getDt())
-                 .atZone(java.time.ZoneId.of("America/Bogota"));
-         String horaStr = hora.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
-
          return "Probabilidad de lluvia: " + probabilidad + "%" +
                  " | Temp: " + tempActual + "°C" +
-                 " | Humedad: " + humidityActual + "%" +
-                 " | Medición: " + horaStr;
+                 " | Humedad: " + humidityActual + "%";
+
      }
 }
