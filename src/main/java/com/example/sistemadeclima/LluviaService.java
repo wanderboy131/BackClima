@@ -7,6 +7,7 @@ public class LluviaService {
 
      public String estimarLluvia(ClimaResponse clima){
 
+
          //Datos main
          double tempActual = clima.getMain().getTemp();
          int humidityActual = clima.getMain().getHumidity();

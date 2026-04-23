@@ -5,9 +5,6 @@ public class ClimaResponse {
        private Clouds clouds;
        private Wind wind;
 
-
-
-
     public Main getMain() {
         return main;
     }

@@ -15,9 +15,8 @@ public class ClimaService {
     public ClimaResponse getClima(double latitud,double longitud){
 
         String apiKey = "75f5c1a2f8ef9e1d5a7cff5eb90cc447";
-        double latFija = 10.4462;
-        double lonFija = -73.2777;
-        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latFija + "&lon=" + lonFija+ "&appid=" + apiKey + "&units=metric&lang=es";
+        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitud + "&lon=" + longitud
+                + "&appid=" + apiKey + "&units=metric&lang=es";
 
         return restTemplate.getForObject(url, ClimaResponse.class);
 
