@@ -12,7 +12,7 @@ public class ClimaService {
         this.restTemplate = restTemplate;
     }
 
-    public ClimaResponse getClima(){
+    public ClimaResponse getClima(double latitud,double longitud){
         String apiKey = "75f5c1a2f8ef9e1d5a7cff5eb90cc447";
         double latFija = 10.436;
         double lonFija = -73.248;
