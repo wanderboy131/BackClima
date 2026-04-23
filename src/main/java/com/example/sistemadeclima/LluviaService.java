@@ -13,7 +13,6 @@ public class LluviaService {
          double tempActual = clima.getMain().getTemp();
          int humidityActual = clima.getMain().getHumidity();
          double grnd_levelActual = clima.getMain().getGrnd_level();
-
          //Datos Clouds
          int cloudsActual = clima.getClouds().getAll();
 
@@ -51,11 +50,6 @@ public class LluviaService {
          //Ajuste de nubosidad para que tenga sentido con humedad
          double nubosidadAjustada = nubosidadNormalizada * humedadNormalizada;
 
-
-
-
-
-
          double score = (deltaDew_normalizada  * 0.40)
                  +      (nubosidadAjustada  * 0.25)
                  +      (presionNormalizada *0.20)
@@ -65,9 +59,9 @@ public class LluviaService {
          double probabilidad = Math.round( score * 10000.0)/100.0;
 
 
-         return "Probabilidad de lluvia ahora: " + probabilidad + "%" +
-                 "Temperatura actual: " + tempActual + "°C" +
-                 "Huumedad: " + humidityActual + "%";
+         return "Probabilidad de lluvia ahora: " + probabilidad + "%"+
+                 " Temperatura actual: " + tempActual + "°C" +
+                 " Humedad: " + humidityActual + "%";
 
 
 

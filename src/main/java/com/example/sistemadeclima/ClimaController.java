@@ -18,6 +18,8 @@ public class ClimaController {
 
     @GetMapping("/traerProbabilidades")
     public String getClima(@RequestParam double latitud, @RequestParam double longitud){
+        System.out.println(latitud);
+        System.out.println(longitud);
         ClimaResponse clima = climaService.getClima(latitud, longitud);
         return lluviaService.estimarLluvia(clima);
     }
