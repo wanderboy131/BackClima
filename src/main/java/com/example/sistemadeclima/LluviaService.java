@@ -65,7 +65,7 @@ public class LluviaService {
                  " | " + descripcion +
                  " | Temp: " + tempActual + "°C" +
                  " | Humedad: " + humidityActual + "%" +
-                 " | ICON:" + icon;
+                 " | ICON: " + icon;
 
      }
 }
