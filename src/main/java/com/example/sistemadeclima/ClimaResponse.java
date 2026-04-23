@@ -1,9 +1,26 @@
 package com.example.sistemadeclima;
 
+import java.util.List;
+
 public class ClimaResponse {
        private Main main;
        private Clouds clouds;
        private Wind wind;
+       private List<Weather> weather;
+
+    public List<Weather> getWeather() { return weather; }
+    public void setWeather(List<Weather> weather) { this.weather = weather; }
+
+    public static class Weather {
+        private String description;
+        private String icon;
+
+        public String getDescription() { return description; }
+        public void setDescription(String description) { this.description = description; }
+        public String getIcon() { return icon; }
+        public void setIcon(String icon) { this.icon = icon; }
+    }
+
 
     public Main getMain() {
         return main;

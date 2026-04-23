@@ -48,6 +48,10 @@ public class LluviaService {
          //Ajuste de nubosidad para que tenga sentido con humedad
          double nubosidadAjustada = nubosidadNormalizada * humedadNormalizada;
 
+         //Obtenemos icon y description
+         String descripcion = clima.getWeather().get(0).getDescription();
+         String icon = clima.getWeather().get(0).getIcon();
+
          double score = (deltaDew_normalizada  * 0.40)
                  +      (nubosidadAjustada  * 0.25)
                  +      (presionNormalizada *0.20)
@@ -58,8 +62,10 @@ public class LluviaService {
 
 
          return "Probabilidad de lluvia: " + probabilidad + "%" +
+                 " | " + descripcion +
                  " | Temp: " + tempActual + "°C" +
-                 " | Humedad: " + humidityActual + "%";
+                 " | Humedad: " + humidityActual + "%" +
+                 " | ICON:" + icon;
 
      }
 }
