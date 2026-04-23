@@ -2,8 +2,6 @@ package com.example.sistemadeclima;
 
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-
 @Service
 public class LluviaService {
 
@@ -22,7 +20,6 @@ public class LluviaService {
 
          boolean vientoLluvioso = (vientoDeg >= 180 && vientoDeg <= 270);
          double dirFactor = vientoLluvioso ? 1.2 : 0.8;
-
 
 
          //Fórmula Magnus
@@ -59,11 +56,13 @@ public class LluviaService {
          double probabilidad = Math.round( score * 10000.0)/100.0;
 
 
-         return "Probabilidad de lluvia ahora: " + probabilidad + "%"+
-                 " Temperatura actual: " + tempActual + "°C" +
-                 " Humedad: " + humidityActual + "%";
+         java.time.ZonedDateTime hora = java.time.Instant.ofEpochSecond(clima.getDt())
+                 .atZone(java.time.ZoneId.of("America/Bogota"));
+         String horaStr = hora.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
 
-
-
+         return "Probabilidad de lluvia: " + probabilidad + "%" +
+                 " | Temp: " + tempActual + "°C" +
+                 " | Humedad: " + humidityActual + "%" +
+                 " | Medición: " + horaStr;
      }
 }
