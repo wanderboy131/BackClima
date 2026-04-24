@@ -34,20 +34,18 @@ public class LluviaService {
          double humedadNormalizada = (humidityActual - 16) /(100.0 - 16.0);
          //double tempNormalizada = Math.max(0, Math.min(1, (31.0 - tempActual) / (31.0 - 15.9)));
          double presionNormalizada = Math.max(0, Math.min(1, (1000.2 - grnd_levelActual) / (1000.2 - 980.0)));
-         double nubosidadNormalizada = (cloudsActual - 40.0)/(100.0 - 40.0) ;
+         double nubosidadNormalizada = cloudsActual / 100.0;
          double vientoNormalizada = Math.min(vientoActual / 10.0, 1.0 ) * dirFactor;
 
-         //Normalización de punto de rocio con umbrales más reales
-         double deltaDew_normalizada;
-         if (deltaDew < 4.5) {
-             deltaDew_normalizada = 1.0; // saturado, lluvia muy probable
-         } else {
-             deltaDew_normalizada = Math.max(0, Math.min(1, 1 - (deltaDew / 20.0)));
-         }
+         //Normalización de punto de rocio progresivo
+         double deltaDew_normalizada = Math.exp(-deltaDew / 4.5);
 
          //Ajuste de nubosidad para que tenga sentido con humedad
          double nubosidadAjustada = nubosidadNormalizada * humedadNormalizada;
-
+         //Penalización de nubosidad para falsos positivos
+         if (nubosidadNormalizada < 0.3) {
+             nubosidadAjustada *= 0.7;
+         }
          //Obtenemos icon y description
          String descripcion = clima.getWeather().get(0).getDescription();
          String icon = clima.getWeather().get(0).getIcon();
