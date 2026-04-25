@@ -69,69 +69,11 @@ public class LluviaService {
 
          return "Probabilidad de lluvia: " + probabilidad + "%" +
                  " | " + clima.getWeather().get(0).getDescription() +
-                 " | Viento: " + vientoActual + "km/h (" + vientoDeg + "°)" +
-                 " | ICON: " + clima.getWeather().get(0).getIcon();
-
-
-
-
-       /*
-         //Datos main
-         double tempActual = clima.getMain().getTemp();
-         int humidityActual = clima.getMain().getHumidity();
-         double grnd_levelActual = clima.getMain().getGrnd_level();
-         //Datos Clouds
-         int cloudsActual = clima.getClouds().getAll();
-
-         //Datos Wind
-         double vientoActual = clima.getWind().getSpeed();
-         double vientoDeg = clima.getWind().getDeg();
-
-         boolean vientoLluvioso = (vientoDeg >= 190 && vientoDeg <= 210);
-         double dirFactor = vientoLluvioso ? 1.2 : 0.8;
-
-
-         //Fórmula Magnus
-         double alpha = ((17.625 * tempActual) / (243.04 + tempActual))
-                 + Math.log(humidityActual / 100.0);
-         double dewpoint = (243.04 * alpha) / (17.625 - alpha);
-         double deltaDew = tempActual - dewpoint;
-
-
-         //Normalización
-         double humedadNormalizada = (humidityActual - 16) /(100.0 - 16.0);
-         //double tempNormalizada = Math.max(0, Math.min(1, (31.0 - tempActual) / (31.0 - 15.9)));
-         double presionNormalizada = Math.max(0, Math.min(1, (1000.2 - grnd_levelActual) / (1000.2 - 980.0)));
-         double nubosidadNormalizada = cloudsActual / 100.0;
-         double vientoNormalizada = Math.min(vientoActual / 10.0, 1.0 ) * dirFactor;
-
-         //Normalización de punto de rocio progresivo
-         double deltaDew_normalizada = Math.exp(-deltaDew / 4.5);
-
-         //Ajuste de nubosidad para que tenga sentido con humedad
-         double nubosidadAjustada = nubosidadNormalizada * humedadNormalizada;
-         //Penalización de nubosidad para falsos positivos
-         if (nubosidadNormalizada < 0.3) {
-             nubosidadAjustada *= 0.7;
-         }
-         //Obtenemos icon y description
-         String descripcion = clima.getWeather().get(0).getDescription();
-         String icon = clima.getWeather().get(0).getIcon();
-
-         double score = (deltaDew_normalizada  * 0.40)
-                 +      (nubosidadAjustada  * 0.25)
-                 +      (presionNormalizada *0.20)
-                 +      (humedadNormalizada * 0.10)
-                 +      (vientoNormalizada  * 0.05);
-
-         double probabilidad = Math.round( score * 10000.0)/100.0;
-
-
-         return "Probabilidad de lluvia: " + probabilidad + "%" +
-                 " | " + descripcion +
                  " | Temp: " + tempActual + "°C" +
                  " | Humedad: " + humidityActual + "%" +
-                 " | ICON: " + icon; */
+                 " | Viento: " + vientoActual + "km/h (" + vientoDeg + "°)" +
+                 " | Presión: " + grnd_levelActual + " hPa" +
+                 " | ICON: " + clima.getWeather().get(0).getIcon();
 
      }
 }
